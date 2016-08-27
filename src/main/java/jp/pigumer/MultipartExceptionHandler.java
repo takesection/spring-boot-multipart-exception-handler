@@ -21,14 +21,16 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.multipart.MultipartException;
 
+import javax.servlet.http.HttpServletRequest;
+
 @ControllerAdvice
 public class MultipartExceptionHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MultipartExceptionHandler.class);
 
     @ExceptionHandler(MultipartException.class)
-    public String handleException(Exception e) {
-        LOGGER.warn("multipart", e);
+    public String handleException(HttpServletRequest request, Exception e) {
+        LOGGER.warn(request.getRequestURI(), e);
         return "filesizeerror";
     }
 }
