@@ -22,6 +22,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
+
 @Controller
 @RequestMapping("/")
 public class Index {
@@ -34,7 +36,7 @@ public class Index {
     }
 
     @RequestMapping("upload")
-    public ModelAndView upload(@ModelAttribute UploadModel uploadModel) {
+    public ModelAndView upload(@ModelAttribute UploadModel uploadModel) throws IOException {
         ModelAndView mv = new ModelAndView("index");
         String filename = uploadModel.getFile().getOriginalFilename();
         if ("test1.file".equals(filename)) {

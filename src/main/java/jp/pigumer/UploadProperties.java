@@ -15,16 +15,18 @@
  */
 package jp.pigumer;
 
-import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
-import org.springframework.boot.context.embedded.ErrorPage;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.multipart.MultipartException;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 
-public class ServletContainerCustomizer implements EmbeddedServletContainerCustomizer {
+@ConfigurationProperties(prefix = "upload")
+public class UploadProperties {
 
-    @Override
-    public void customize(ConfigurableEmbeddedServletContainer container) {
-        container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/404"));
+    private boolean resolveLazily = false;
+
+    public void setResolveLazily(boolean resolveLazily) {
+        this.resolveLazily = resolveLazily;
+    }
+
+    public boolean getResolveLazily() {
+        return resolveLazily;
     }
 }
