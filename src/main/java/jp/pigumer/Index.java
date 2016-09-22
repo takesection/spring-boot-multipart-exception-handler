@@ -18,8 +18,11 @@ package jp.pigumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
@@ -30,6 +33,13 @@ public class Index {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Index.class);
 
+    @ExceptionHandler(MultipartException.class)
+    @ResponseBody
+    public String handlerException(Throwable t) {
+        LOGGER.error("Index Handler: " + t.getClass().getName(), t);
+        return t.getMessage();
+    }
+
     @RequestMapping
     public ModelAndView index() {
         return new ModelAndView("index");
@@ -39,9 +49,6 @@ public class Index {
     public ModelAndView upload(@ModelAttribute UploadModel uploadModel) throws IOException {
         ModelAndView mv = new ModelAndView("index");
         String filename = uploadModel.getFile().getOriginalFilename();
-        if ("test1.file".equals(filename)) {
-            throw new RuntimeException("test");
-        }
         mv.addObject("filename", filename);
         return mv;
     }

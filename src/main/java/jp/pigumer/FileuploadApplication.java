@@ -15,36 +15,14 @@
  */
 package jp.pigumer;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.multipart.support.StandardServletMultipartResolver;
-import org.springframework.web.servlet.DispatcherServlet;
 
 @SpringBootApplication
-@EnableConfigurationProperties(UploadProperties.class)
-public class FileuploadApplication extends SpringBootServletInitializer {
-
-	@Autowired
-	UploadProperties properties;
+public class FileuploadApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(FileuploadApplication.class, args);
 	}
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		return builder.sources(FileuploadApplication.class);
-	}
-
-	@Bean(name = DispatcherServlet.MULTIPART_RESOLVER_BEAN_NAME)
-	public StandardServletMultipartResolver multipartResolver() {
-		StandardServletMultipartResolver multipartResolver = new StandardServletMultipartResolver();
-		multipartResolver.setResolveLazily(properties.getResolveLazily());
-		return multipartResolver;
-	}
 }
